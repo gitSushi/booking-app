@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	conferenceName := "our conference" // syntactic sugar for implicit variables
@@ -26,33 +29,50 @@ func main() {
 	// var bookings = []string{}
 	// bookings := []string{}
 
-	var firstname string
-	var lastname string
-	var email string
-	var userTickets int
-	// ask user for their name
-	fmt.Println("Enter your firstname: ")
-	fmt.Scan(&firstname)
-	fmt.Println("Enter your lastname: ")
-	fmt.Scan(&lastname)
-	fmt.Println("Enter your email address: ")
-	fmt.Scan(&email)
-	fmt.Println("Enter the number of tickets to book: ")
-	fmt.Scan(&userTickets)
+	for {
+		var firstname string
+		var lastname string
+		var email string
+		var userTickets int
+		// ask user for their name
+		fmt.Println("Enter your firstname: ")
+		fmt.Scan(&firstname)
+		fmt.Println("Enter your lastname: ")
+		fmt.Scan(&lastname)
+		fmt.Println("Enter your email address: ")
+		fmt.Scan(&email)
+		fmt.Println("Enter the number of tickets to book: ")
+		fmt.Scan(&userTickets)
+	
+		remainingTickets -= uint16(userTickets)
+		// assign to an array index
+		// bookings[0] = firstname + " " + lastname
+		// append to a slice
+		bookings = append(bookings, firstname+" "+lastname)
+	
+		// fmt.Printf("The whole array or slice: %v\n", bookings)
+		// fmt.Printf("First value: %v\n", bookings[0])
+		// fmt.Printf("Array or slice type: %T\n", bookings)
+		// fmt.Printf("Array or slice length: %v\n", len(bookings))
+	
+		fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
+		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+	
+		fmt.Printf("List of all the bookings:\n%v\n", bookings)
+		
+		firstnames := []string{}
+		
+		// Blank identifier
+		for _, booking := range bookings {
+			var names = strings.Fields(booking)
+			firstnames = append(firstnames, names[0])
+		}
+		
+		// for index, booking := range bookings {
+		// 	var names = strings.Fields(booking)
+		// 	firstnames = append(firstnames, strconv.Itoa(index)+" "+names[0])
+		// }
 
-	remainingTickets -= uint16(userTickets)
-	// assign to an array index
-	// bookings[0] = firstname + " " + lastname
-	// append to a slice
-	bookings = append(bookings, firstname+" "+lastname)
-
-	// fmt.Printf("The whole array or slice: %v\n", bookings)
-	// fmt.Printf("First value: %v\n", bookings[0])
-	// fmt.Printf("Array or slice type: %T\n", bookings)
-	// fmt.Printf("Array or slice length: %v\n", len(bookings))
-
-	fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
-	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
-
-	fmt.Printf("List of all the bookings:\n%v\n", bookings)
+		fmt.Printf("List of all the firstnames of bookings:\n%v\n", firstnames)
+	}
 }
