@@ -29,6 +29,9 @@ func main() {
 	// var bookings = []string{}
 	// bookings := []string{}
 
+	// Conditions in a for loop
+	// for remainingTickets > 0 && len(bookings) < 50 {
+	// Implicit condition true
 	for {
 		var firstname string
 		var lastname string
@@ -44,35 +47,51 @@ func main() {
 		fmt.Println("Enter the number of tickets to book: ")
 		fmt.Scan(&userTickets)
 	
-		remainingTickets -= uint16(userTickets)
-		// assign to an array index
-		// bookings[0] = firstname + " " + lastname
-		// append to a slice
-		bookings = append(bookings, firstname+" "+lastname)
-	
-		// fmt.Printf("The whole array or slice: %v\n", bookings)
-		// fmt.Printf("First value: %v\n", bookings[0])
-		// fmt.Printf("Array or slice type: %T\n", bookings)
-		// fmt.Printf("Array or slice length: %v\n", len(bookings))
-	
-		fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
-		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
-	
-		fmt.Printf("List of all the bookings:\n%v\n", bookings)
-		
-		firstnames := []string{}
-		
-		// Blank identifier
-		for _, booking := range bookings {
-			var names = strings.Fields(booking)
-			firstnames = append(firstnames, names[0])
-		}
-		
-		// for index, booking := range bookings {
-		// 	var names = strings.Fields(booking)
-		// 	firstnames = append(firstnames, strconv.Itoa(index)+" "+names[0])
+		// Shows the use of continue keyword
+		// if userTickets > int(remainingTickets) {
+		// 	fmt.Printf("We only have %v remaining tickets. You cannot book %v tickets.\n", remainingTickets, userTickets)
+		// 	continue
 		// }
 
-		fmt.Printf("List of all the firstnames of bookings:\n%v\n", firstnames)
+		if userTickets <= int(remainingTickets) {
+			remainingTickets -= uint16(userTickets)
+			// assign to an array index
+			// bookings[0] = firstname + " " + lastname
+			// append to a slice
+			bookings = append(bookings, firstname+" "+lastname)
+		
+			// fmt.Printf("The whole array or slice: %v\n", bookings)
+			// fmt.Printf("First value: %v\n", bookings[0])
+			// fmt.Printf("Array or slice type: %T\n", bookings)
+			// fmt.Printf("Array or slice length: %v\n", len(bookings))
+		
+			fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
+			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+		
+			fmt.Printf("List of all the bookings:\n%v\n", bookings)
+			
+			firstnames := []string{}
+			
+			// Blank identifier
+			for _, booking := range bookings {
+				var names = strings.Fields(booking)
+				firstnames = append(firstnames, names[0])
+			}
+			
+			// for index, booking := range bookings {
+			// 	var names = strings.Fields(booking)
+			// 	firstnames = append(firstnames, strconv.Itoa(index)+" "+names[0])
+			// }
+	
+			fmt.Printf("List of all the firstnames of bookings:\n%v\n", firstnames)
+	
+			if remainingTickets == 0 {
+				// end program
+				fmt.Println("The conference is booked out. Come back next year.")
+				break
+			}
+		} else {
+			fmt.Printf("We only have %v remaining tickets. You cannot book %v tickets.\n", remainingTickets, userTickets)
+		}
 	}
 }
