@@ -1,13 +1,19 @@
 // A package is a collection of Go file(s)
 package main
 
+/*
 import (
 	"booking-app/helper"
 	"fmt"
 	"strings"
 )
+*/
+import (
+	"fmt"
+	"strings"
+)
 
-// Moved to helper/helper.go
+//  ̶M̶o̶v̶e̶d̶ ̶t̶o̶ ̶h̶e̶l̶p̶e̶r̶/̶h̶e̶l̶p̶e̶r̶.̶g̶o̶
 /*
 // var conferenceName = "our conference"
 */
@@ -16,6 +22,7 @@ import (
 //  ̶S̶e̶e̶m̶s̶ ̶t̶o̶ ̶b̶e̶ ̶l̶i̶k̶e̶ ̶g̶l̶o̶b̶a̶l̶ ̶s̶c̶o̶p̶e̶ ̶v̶a̶r̶i̶a̶b̶l̶e̶s̶
 // They cannot de defined as implicit variables
 const conferenceTickets uint8 = 50
+var conferenceName = "our conference"
 var remainingTickets uint16 = 50
 var bookings []string
 
@@ -39,8 +46,8 @@ func main() {
 	fmt.Println("Get your ticket here to attend")
 	*/
 
-	fmt.Println(helper.ConferenceName)
-	fmt.Println(&helper.ConferenceName) // pointer -> displays memory
+	fmt.Println(conferenceName)
+	fmt.Println(&conferenceName) // pointer -> displays memory
 
 	// Placed as package level variable
 	/*
@@ -74,7 +81,7 @@ func main() {
 		fmt.Scan(&userTickets)
 		*/
 
-		isValidName, isValidEmail, isValidUserTicket := helper.ValidateUserInput(firstname, lastname, email, userTickets, remainingTickets) // Replaces following commented block
+		isValidName, isValidEmail, isValidUserTicket := validateUserInput(firstname, lastname, email, userTickets) // Replaces following commented block
 		/*
 		isValidName := len(firstname) >= 2 && len(lastname) >= 2
 		isValidEmail := strings.Contains(email, "@")
@@ -156,7 +163,7 @@ func main() {
 // func greetVisitor(conferenceName string, remainingTickets uint16, conferenceTickets uint8){
 // Function accessing package level variables
 func greetVisitor(){
-	fmt.Printf("Welcome to %v booking app\n", helper.ConferenceName)
+	fmt.Printf("Welcome to %v booking app\n", conferenceName)
 	fmt.Printf("We have %v tickets still available out of the %v.\n", remainingTickets, conferenceTickets)
 	fmt.Println("Get your ticket here to attend")
 }
@@ -213,7 +220,7 @@ func bookTicket(userTickets int, firstname string, lastname string, email string
 	bookings = append(bookings, firstname+" "+lastname)
 
 	fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
-	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, helper.ConferenceName)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
 	return bookings
 }

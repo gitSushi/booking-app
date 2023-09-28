@@ -1,8 +1,7 @@
-// Moved to its own package
+//	̶M̶o̶v̶e̶d̶ ̶t̶o̶ ̶i̶t̶s̶ ̶o̶w̶n̶ ̶p̶a̶c̶k̶a̶g̶e̶
+//
 // Own packages are in own folders
 package main
-
-/*
 
 import "strings"
 
@@ -15,4 +14,3 @@ func validateUserInput(firstname string, lastname string, email string, userTick
 
 	return isValidName, isValidEmail, isValidUserTicket
 }
-*/
