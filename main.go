@@ -1,6 +1,8 @@
+// A package is a collection of Go file(s)
 package main
 
 import (
+	"booking-app/helper"
 	"fmt"
 	"strings"
 )
@@ -15,7 +17,7 @@ var bookings []string
 
 func main() {
 
-	// Place as package level variables
+	// Placed as package level variables
 	/*
 	conferenceName := "our conference" // syntactic sugar for implicit variables
 	const conferenceTickets uint8 = 50 // There cannot be a negative total ticket
@@ -36,7 +38,7 @@ func main() {
 	fmt.Println(conferenceName)
 	fmt.Println(&conferenceName) // pointer -> displays memory
 
-	// Place as package level variable
+	// Placed as package level variable
 	/*
 	// arrays hold only one type and definite length
 	// var bookings [50]string
@@ -68,7 +70,7 @@ func main() {
 		fmt.Scan(&userTickets)
 		*/
 
-		isValidName, isValidEmail, isValidUserTicket := validateUserInput(firstname, lastname, email, userTickets) // Replaces following commented block
+		isValidName, isValidEmail, isValidUserTicket := helper.ValidateUserInput(firstname, lastname, email, userTickets, remainingTickets) // Replaces following commented block
 		/*
 		isValidName := len(firstname) >= 2 && len(lastname) >= 2
 		isValidEmail := strings.Contains(email, "@")
@@ -146,8 +148,9 @@ func main() {
 	showSwitchExample()
 }
 
-// Function accessing package level variable
+// Function with parameters to access local level variables
 // func greetVisitor(conferenceName string, remainingTickets uint16, conferenceTickets uint8){
+// Function accessing package level variables
 func greetVisitor(){
 	fmt.Printf("Welcome to %v booking app\n", conferenceName)
 	fmt.Printf("We have %v tickets still available out of the %v.\n", remainingTickets, conferenceTickets)
@@ -167,6 +170,8 @@ func getFirstnames() []string {
 	return firstnames
 }
 
+// Moved to helper.go
+/*
 // func validateUserInput(firstname string, lastname string, email string, userTickets int, remainingTickets uint16) (bool, bool, bool){
 func validateUserInput(firstname string, lastname string, email string, userTickets int) (bool, bool, bool){
 	isValidName := len(firstname) >= 2 && len(lastname) >= 2
@@ -175,6 +180,7 @@ func validateUserInput(firstname string, lastname string, email string, userTick
 
 	return isValidName, isValidEmail, isValidUserTicket
 }
+*/
 
 func getUserInput() (string, string, string, int){
 	var firstname string
