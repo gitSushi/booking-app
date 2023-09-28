@@ -7,11 +7,15 @@ import (
 	"strings"
 )
 
-// Package Level Variables
-// Seems to be like global scope variables
+// Moved to helper/helper.go
+/*
+// var conferenceName = "our conference"
+*/
+
+// Package Level Variables == package scope variables
+//  ̶S̶e̶e̶m̶s̶ ̶t̶o̶ ̶b̶e̶ ̶l̶i̶k̶e̶ ̶g̶l̶o̶b̶a̶l̶ ̶s̶c̶o̶p̶e̶ ̶v̶a̶r̶i̶a̶b̶l̶e̶s̶
 // They cannot de defined as implicit variables
 const conferenceTickets uint8 = 50
-var conferenceName = "our conference"
 var remainingTickets uint16 = 50
 var bookings []string
 
@@ -35,8 +39,8 @@ func main() {
 	fmt.Println("Get your ticket here to attend")
 	*/
 
-	fmt.Println(conferenceName)
-	fmt.Println(&conferenceName) // pointer -> displays memory
+	fmt.Println(helper.ConferenceName)
+	fmt.Println(&helper.ConferenceName) // pointer -> displays memory
 
 	// Placed as package level variable
 	/*
@@ -152,17 +156,20 @@ func main() {
 // func greetVisitor(conferenceName string, remainingTickets uint16, conferenceTickets uint8){
 // Function accessing package level variables
 func greetVisitor(){
-	fmt.Printf("Welcome to %v booking app\n", conferenceName)
+	fmt.Printf("Welcome to %v booking app\n", helper.ConferenceName)
 	fmt.Printf("We have %v tickets still available out of the %v.\n", remainingTickets, conferenceTickets)
 	fmt.Println("Get your ticket here to attend")
 }
 
 // func getFirstnames(bookings []string) []string {
 func getFirstnames() []string {
+	// Local scope variable within getFirstnames function
 	firstnames := []string{}
-
+	
 	// Blank identifier
 	for _, booking := range bookings {
+		// Local scope variable within the for loop
+		// Is NOT known outside of it. Not even inside the getFirstnames function
 		var names = strings.Fields(booking)
 		firstnames = append(firstnames, names[0])
 	}
@@ -206,7 +213,7 @@ func bookTicket(userTickets int, firstname string, lastname string, email string
 	bookings = append(bookings, firstname+" "+lastname)
 
 	fmt.Printf("Thank you %v %v for booking %v tickets.\n You will receive a confirmation email at %v\n", firstname, lastname, userTickets, email)
-	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, helper.ConferenceName)
 
 	return bookings
 }

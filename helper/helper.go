@@ -11,3 +11,6 @@ func ValidateUserInput(firstname string, lastname string, email string, userTick
 
 	return isValidName, isValidEmail, isValidUserTicket
 }
+
+// A global scope variable
+var ConferenceName = "our conference"
