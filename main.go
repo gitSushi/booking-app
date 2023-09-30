@@ -9,7 +9,12 @@ import (
 	"strconv"
 )
 */
-import "fmt"
+import (
+	"fmt"
+	"strings"
+	"sync"
+	"time"
+)
 
 //  ̶M̶o̶v̶e̶d̶ ̶t̶o̶ ̶h̶e̶l̶p̶e̶r̶/̶h̶e̶l̶p̶e̶r̶.̶g̶o̶
 /*
@@ -40,6 +45,17 @@ type UserStruct struct {
 	email string
 	userTickets	int
 }
+
+
+// Allows Go routines
+// Go routines are actually done inside the same thread
+// But works as if it was multi-threaded
+// which is faster and more performant
+// high-level Go routine vs. low-level OS thread (managed by kernel)
+//
+// Other advantage :
+// Go routines can communicate with each other through a channel unlike threads
+var wg = sync.WaitGroup {}
 
 func main() {
 
@@ -75,10 +91,15 @@ func main() {
 	// bookings := []string{}
 	*/
 
+	// Removed the for loop to test if main program waits for the threads to end
+	// -> It doesn't !
+	// Solution : a wait group defined outside the main function (above)
+	/*
 	// Conditions in a for loop
 	// for remainingTickets > 0 && len(bookings) < 50 {
 	// Implicit condition true
 	for {
+	*/
 		firstname, lastname, email, userTickets := getUserInput() // Replaces following commented block
 		/*
 		var firstname string
@@ -112,6 +133,16 @@ func main() {
 		// if userTickets <= int(remainingTickets) {
 		if isValidName && isValidEmail && isValidUserTicket {
 			bookings = bookTicket(userTickets, firstname, lastname, email) // Replaces following commented block
+
+			// The delta is the number of G routines. In our case : 1
+			// The Add function works in trio
+			// • with the Wait function. See at end of main func
+			// • And with the Done function. See at end of sendTicket func
+			wg.Add(1)
+			// go keyword allows multi-threads
+			// starts a new Go routine (= a lightweight thread managed by Go runtime)
+			// It takes little memory compared to an actual thread
+			go sendTicket(userTickets, firstname, lastname, email)
 			/*
 			remainingTickets -= uint16(userTickets)
 			// assign to an array index
@@ -156,7 +187,10 @@ func main() {
 			if remainingTickets == 0 {
 				// end program
 				fmt.Println("The conference is booked out. Come back next year.")
+				// break isn't needed without the for loop
+				/*
 				break
+				*/
 			}
 		} else {
 			// fmt.Printf("We only have %v remaining tickets. You cannot book %v tickets.\n", remainingTickets, userTickets)
@@ -171,8 +205,13 @@ func main() {
 				fmt.Println("The number of tickets you entered is invalid.")
 			}
 		}
+	/*
 	}
+	*/
 
+	// Waits for the delta of the wait group to reach zero
+	// It is synchronous again
+	wg.Wait()
 
 	showSwitchExample()
 }
@@ -292,4 +331,19 @@ func showSwitchExample(){
 				fmt.Println("For some unknown reason, they are not equal !?!")
 			}
 	}
+}
+
+func divider(n int){
+	repeated := strings.Repeat("#", n)
+	fmt.Println(repeated)
+}
+
+func sendTicket(userTickets int, firstname string, lastname string, email string){
+	time.Sleep(5 * time.Second)
+	var receipt = fmt.Sprintf("%v tickects for %v %v", userTickets, firstname, lastname)
+	divider(18)
+	fmt.Printf("Sending receipt :\n %v\n to : %v\n", receipt, email)
+	divider(18)
+	// Decrements by one the number of Go routines (delta) in the wait group
+	wg.Done()
 }
